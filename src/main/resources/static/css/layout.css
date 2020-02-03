@@ -1,0 +1,10 @@
+body {
+  padding-top: 56px;
+}
+#carrinho{
+  font-size: 0.6rem;
+  position: absolute;
+  margin-left: 70px;
+  margin-top: 16px;
+  z-index: -1;
+}
