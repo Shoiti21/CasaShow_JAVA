@@ -11,12 +11,16 @@ public class Security_config extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.
 				authorizeRequests()
-					.antMatchers("/registrar_show","/carrinho").hasAnyRole("ACESSO_ADM")
+					//.antMatchers("/registrar_show","/carrinho").hasAnyRole("ACESSO_ADM")
 					.anyRequest()
 					.authenticated()
 				.and()
 				.formLogin()
 					.loginPage("/login")
+					.permitAll()
+				.and()
+				.logout()
+					.logoutSuccessUrl("/login?sair")
 					.permitAll();
 		}
 }

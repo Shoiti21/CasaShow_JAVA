@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="Layout">
+<head>
+<title>CASA DE SHOW</title>
+<link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
+</head>
+<section layout:fragment="conteudo">
+	<div class="container" style="margin-top: 16px;">
+		<h1> EVENTO </h1>
+		<form class="form-horizontal">
+			<div class="card">
+				<div class="card-header">
+					<h4> Registrar </h4>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label for="InputNomeShow">Nome:</label> 
+						<input type="text" class="form-control" id="InputNomeShow" placeholder="Nome">
+					</div>
+					<div class="form-group">
+						<label for="InputLocalShow">Local:</label> 
+						<input type="text" class="form-control" id="InputLocalShow" placeholder="Local">
+					</div>
+					<button type="submit" class="btn btn-secondary"
+						style="float: right;">SALVAR</button>
+					<div style="margin-top: 120px;">
+						<table class="table table-bordered">
+							<thead class="text-muted">
+								<tr>
+									<th rowspan=2 scope="col" width="6%" style="vertical-align: middle;">ID</th>
+									<th rowspan=2 scope="col" width="29%" style="text-align: center; vertical-align: middle;">Nome</th>
+									<th rowspan=2 scope="col" width="15%" style="text-align: center; vertical-align: middle;">Data</th>
+									<th rowspan=2 scope="col" width="24*" style="text-align: center; vertical-align: middle;">Casa de Show</th>
+									<th rowspan=2 scope="col" width="10%" style="text-align: center; vertical-align: middle;">Valor</th>
+									<th colspan=2 scope="col" width="16%" style="text-align: center; vertical-align: middle;">Quant. de Ingressos</th>
+								</tr>
+								<tr>
+									<th scope="col" width="8%" style="text-align: center;">Total</th>
+									<th scope="col" width="8%" style="text-align: center;">Disponível</th>
+								</tr>
+							</thead>
+							<tbody class="table-hover">
+								<tr th:each="evento : ${list_evento}">
+									<td th:text="${evento.id}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.nome}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.data}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.genero.nome}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.valor}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.qtdIngressoMax}" style="text-align: center; vertical-align: middle;"></td>
+									<td th:text="${evento.qtdIngresso}" style="text-align: center; vertical-align: middle;"></td>
+									<td class="text-right" style="text-align: center; vertical-align: middle;">
+										<a th:href="@{/{evento_id}(evento_id=${evento.id})}" class="btn btn-success">REMOVER</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+</html>
