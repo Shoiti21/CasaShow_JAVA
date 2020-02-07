@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 
 @Entity
 public class Eventos {
@@ -21,9 +24,11 @@ public class Eventos {
     @ManyToOne
     @JoinColumn
 	private Casa_Show casashow;
+    @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
 	private Genero genero;
+	@NumberFormat(pattern="#,##0.00")
 	private double valor;
 	private int qtdIngressoMax;
 	private int qtdIngresso;

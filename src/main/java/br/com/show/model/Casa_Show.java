@@ -4,13 +4,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Casa_Show {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message = "O campo Nome é obrigatorio!")
+	//@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
+	@NotEmpty(message = "O campo Local é obrigatorio!")
+	//@NotNull(message="O campo Local é obrigatorio!")
 	private String local;
 	public Long getId() {
 		return id;

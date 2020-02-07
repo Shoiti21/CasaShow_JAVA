@@ -9,57 +9,91 @@
 <section layout:fragment="conteudo">
 	<div class="container" style="margin-top: 16px;">
 		<h1> EVENTO </h1>
-		<form class="form-horizontal">
-			<div class="card">
-				<div class="card-header">
-					<h4> Registrar </h4>
-				</div>
-				<div class="card-body">
-					<div class="form-group">
-						<label for="InputNomeShow">Nome:</label> 
-						<input type="text" class="form-control" id="InputNomeShow" placeholder="Nome">
-					</div>
-					<div class="form-group">
-						<label for="InputLocalShow">Local:</label> 
-						<input type="text" class="form-control" id="InputLocalShow" placeholder="Local">
-					</div>
-					<button type="submit" class="btn btn-secondary"
-						style="float: right;">SALVAR</button>
-					<div style="margin-top: 120px;">
-						<table class="table table-bordered">
-							<thead class="text-muted">
-								<tr>
-									<th rowspan=2 scope="col" width="6%" style="vertical-align: middle;">ID</th>
-									<th rowspan=2 scope="col" width="29%" style="text-align: center; vertical-align: middle;">Nome</th>
-									<th rowspan=2 scope="col" width="15%" style="text-align: center; vertical-align: middle;">Data</th>
-									<th rowspan=2 scope="col" width="24*" style="text-align: center; vertical-align: middle;">Casa de Show</th>
-									<th rowspan=2 scope="col" width="10%" style="text-align: center; vertical-align: middle;">Valor</th>
-									<th colspan=2 scope="col" width="16%" style="text-align: center; vertical-align: middle;">Quant. de Ingressos</th>
-								</tr>
-								<tr>
-									<th scope="col" width="8%" style="text-align: center;">Total</th>
-									<th scope="col" width="8%" style="text-align: center;">Disponível</th>
-								</tr>
-							</thead>
-							<tbody class="table-hover">
-								<tr th:each="evento : ${list_evento}">
-									<td th:text="${evento.id}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.nome}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.data}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.genero.nome}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.valor}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.qtdIngressoMax}" style="text-align: center; vertical-align: middle;"></td>
-									<td th:text="${evento.qtdIngresso}" style="text-align: center; vertical-align: middle;"></td>
-									<td class="text-right" style="text-align: center; vertical-align: middle;">
-										<a th:href="@{/{evento_id}(evento_id=${evento.id})}" class="btn btn-success">REMOVER</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
+		<form th:if="${evento}">
+			<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
+				<button type="button" class="close" data-dismiss="alert"></button>
+				<span th:text="${mensagem}"></span>
+			</div>
+			<div class="alert alert-danger">
+				<span></span>
 			</div>
 		</form>
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError : ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<h4> Registrar </h4>
+			</div>
+			<div class="card-body">
+				<form class="form-horizontal" method="post" action="/registrar/salvarevento" th:object="${evento}">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="InputNomeShow">Nome:</label> 
+							<input type="text" class="form-control" id="InputNomeShow" placeholder="Nome">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="InputNomeShow">Local:</label> 
+							<input type="text" class="form-control" id="InputNomeShow" placeholder="Local">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-3">
+							<label for="InputNomeShow">Data:</label> 
+							<input type="text" class="form-control" id="" placeholder="DD/MM/AAAA (Dia do evento)">
+						</div>
+						<div class="form-group col-md-3">
+							<label for="InputNomeShow">Total de Ingressos:</label> 
+							<input type="number" class="form-control" id="InputNomeShow">
+						</div>
+						<div class="form-group col-md-3">
+							<label for="InputNomeShow">Valor:</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">R$</div>
+								</div>
+								<input type="text" class="form-control" id="InputNomeShow" placeholder="000.00">
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-secondary" style="float: right;">SALVAR</button>
+				</form>
+				<div style="margin-top: 120px;">
+					<table class="table table-bordered">
+						<thead class="text-muted">
+							<tr>
+								<th rowspan=2 scope="col" width="6%" style="vertical-align: middle;">ID</th>
+								<th rowspan=2 scope="col" width="29%" style="text-align: center; vertical-align: middle;">Nome</th>
+								<th rowspan=2 scope="col" width="15%" style="text-align: center; vertical-align: middle;">Data</th>
+								<th rowspan=2 scope="col" width="24*" style="text-align: center; vertical-align: middle;">Casa de Show</th>
+								<th rowspan=2 scope="col" width="10%" style="text-align: center; vertical-align: middle;">Valor</th>
+								<th colspan=2 scope="col" width="16%" style="text-align: center; vertical-align: middle;">Quant. de Ingressos</th>
+							</tr>
+							<tr>
+								<th scope="col" width="8%" style="text-align: center;">Total</th>
+								<th scope="col" width="8%" style="text-align: center;">Disponível</th>
+							</tr>
+						</thead>
+						<tbody class="table-hover">
+							<tr th:each="evento : ${list_evento}">
+								<td th:text="${evento.id}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.nome}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.data}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.genero.nome}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.valor}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.qtdIngressoMax}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${evento.qtdIngresso}" style="text-align: center; vertical-align: middle;"></td>
+								<td class="text-right" style="text-align: center; vertical-align: middle;">
+									<a th:href="@{/{evento_id}(evento_id=${evento.id})}" class="btn btn-success">REMOVER</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 </html>
