@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Casa_Show {
+public class Casa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -51,7 +51,7 @@ public class Casa_Show {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Casa_Show other = (Casa_Show) obj;
+		Casa other = (Casa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

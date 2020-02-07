@@ -23,7 +23,7 @@ public class Eventos {
 	private String nome;
     @ManyToOne
     @JoinColumn
-	private Casa_Show casashow;
+	private Casa casashow;
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -51,10 +51,10 @@ public class Eventos {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Casa_Show getCasashow() {
+	public Casa getCasashow() {
 		return casashow;
 	}
-	public void setCasashow(Casa_Show id_casashow) {
+	public void setCasashow(Casa id_casashow) {
 		this.casashow = id_casashow;
 	}
 	public Date getData() {

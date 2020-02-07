@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="Layout">
+<head>
+<title>CASA DE SHOW</title>
+<link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
+</head>
+<section layout:fragment="conteudo">
+	<!-- Page Content -->
+	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${casa}">
+		<div class="container" style="margin-top: 16px;">
+			<h1> CASA DE SHOW </h1>
+			<div class="card">
+				<div class="card-header">
+					<h4> Lista de Casa de Show <a style="float: right;" class="btn btn-primary btn-sm" href="/registrar/show" role="button">Nova Casa de Show</a></h4>
+				</div>
+				<div class="card-body">
+					<table class="table table-hover table-bordered">
+						<thead class="text-muted">
+							<tr>
+								<th scope="col" width="6%">ID</th>
+								<th scope="col" width="40%" style="text-align: center;">Nome</th>
+								<th scope="col" width="40%" style="text-align: center;">Local</th>
+								<th scope="col" width="14%" style="text-align: center;">Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="casa_show : ${list_casa}">
+								<td th:text="${casa_show.id}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${casa_show.nome}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${casa_show.local}" style="text-align: center; vertical-align: middle;"></td>
+								<td class="text-right" style="text-align: center; vertical-align: middle;">
+									<div class="btn-group" data-toggle="buttons">
+										<label> 
+											<a class="btn btn-light btn-sm" th:href="@{/editarShow/{show_id}(show_id=${casa_show.id})}"> EDITAR</a>
+										</label> 
+										<label> 
+											<a class="btn btn-light btn-sm" th:href="@{/removerShow/{show_id}(show_id=${casa_show.id})}">REMOVER</a>
+										</label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>
+</html>
