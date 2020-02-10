@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="Layout">
 <head>
@@ -7,12 +7,12 @@
 <link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
 </head>
 <section layout:fragment="conteudo">
-	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${eventos}">
+	<form class="form-horizontal" method="POST" action="/registrar/salvarevento" th:object="${eventos}">
 		<div class="container" style="margin-top: 16px;">
-			<h1> EVENTO </h1>
+			<h1 style="margin-top: 16px;"> EVENTO </h1>
 			<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(sucesso_evento)}">
 				<button type="button" class="close" data-dismiss="alert"></button>
-				<span th:text="${mensagem}"></span>
+				<span th:text="${sucesso_evento}"></span>
 			</div>
 			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
 				<div th:each="detailedError : ${#fields.detailedErrors()}">
@@ -24,26 +24,33 @@
 					<h4> Registrar </h4>
 				</div>
 				<div class="card-body">
+					<input type="hidden" th:field="*{id}">
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="InputNomeShow">Nome:</label> 
-							<input type="text" class="form-control" id="InputNomeShow" placeholder="Nome">
+							<input type="text" class="form-control" id="InputNomeShow" placeholder="Nome" th:field="*{nome}">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="InputNomeShow">Local:</label> 
-							<select class="form-control" name="casashow">
+							<select class="form-control" th:field="*{casashow}">
 								<option  th:each="casaa : ${list_casa}" th:value="${casaa.id}" th:text="${casaa.nome}"></option>
 							</select>
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-2">
 							<label for="InputNomeShow">Data:</label> 
-							<input type="text" class="form-control" id="" placeholder="DD/MM/AAAA (Dia do evento)">
+							<input type="text" class="form-control" th:field="*{data}" placeholder="DD/MM/AAAA">
+						</div>
+						<div class="form-group col-md-2">
+							<label for="InputNomeShow">Gênero:</label> 
+							<select class="form-control" th:field="*{genero}">
+								<option  th:each="genero : ${genero}" th:value="${genero}" th:text="${genero.tipo}"></option>
+							</select>
 						</div>
 						<div class="form-group col-md-3">
 							<label for="InputNomeShow">Total de Ingressos:</label> 
-							<input type="number" class="form-control" id="InputNomeShow">
+							<input type="number" class="form-control" id="InputNomeShow" th:field="*{qtdIngressoMax}">
 						</div>
 						<div class="form-group col-md-3">
 							<label for="InputNomeShow">Valor:</label>
@@ -51,7 +58,7 @@
 								<div class="input-group-prepend">
 									<div class="input-group-text">R$</div>
 								</div>
-								<input type="text" class="form-control" id="InputNomeShow" placeholder="000.00">
+								<input type="text" class="form-control" id="InputNomeShow" placeholder="0,00" th:field="*{valor}">
 							</div>
 						</div>
 					</div>

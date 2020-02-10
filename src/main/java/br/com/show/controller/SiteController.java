@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.show.model.Casa;
 import br.com.show.model.Eventos;
+import br.com.show.model.Genero;
 import br.com.show.repository.repCasaShow;
 import br.com.show.repository.repEventos;
 
@@ -96,6 +97,7 @@ public class SiteController {
 	public ModelAndView registrar_Evento() {
 		List<Casa> todasCasas=repShow.findAll();
 		ModelAndView mv=new ModelAndView("page_registrarEvento");
+		mv.addObject("genero", Genero.values());
 		mv.addObject("list_casa", todasCasas);
 		mv.addObject(new Eventos());
 		return mv;
@@ -105,8 +107,19 @@ public class SiteController {
 		if(errors.hasErrors()) {
 			return "page_registrarEvento";
 		}
+		evento.setQtdIngresso(evento.getQtdIngressoMax());
 		repEventos.save(evento);
 		attributes.addFlashAttribute("sucesso_evento", "Evento registrado com sucesso!");
 		return "redirect:/registrar/evento";
+	}
+	@RequestMapping("/editarEvento/{evento_id}")
+	public ModelAndView editar_Evento(@PathVariable Long evento_id) {
+		List<Casa> todasCasas=repShow.findAll();
+		ModelAndView mv=new ModelAndView("page_registrarEvento");
+		Optional<Eventos> eventos=repEventos.findById(evento_id);
+		mv.addObject("genero", Genero.values());
+		mv.addObject("list_casa", todasCasas);
+		mv.addObject(eventos.get());
+		return mv;
 	}
 }

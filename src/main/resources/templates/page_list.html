@@ -7,23 +7,16 @@
 		<link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
 	</head>
 	<section layout:fragment="conteudo">
-		<!-- Page Content -->
 		<div class="container">
-	
 			<div class="row">
-	
 				<div class="col-lg-3">
-	
 					<h1 class="my-4">Shop Name</h1>
 					<div class="list-group">
 						<a href="#" class="list-group-item">Category 1</a> <a href="#"
 							class="list-group-item">Category 2</a> <a href="#"
 							class="list-group-item">Category 3</a>
 					</div>
-	
 				</div>
-				<!-- /.col-lg-3 -->
-	
 				<div class="col-lg-9">
 					<div style="margin-top: 40px;" class="row">
 							<form class="form-inline my-2 my-lg-0">
@@ -56,19 +49,36 @@
 										</ul>
 									</div>
 								</li>
+								<li th:each="evento : ${list_evento}">
+									<time>
+										<span class="day" th:text="${#dates.format(evento.data, 'dd')}"></span>
+										<span class="month" th:text="${#dates.format(evento.data, 'MMM')}"></span>
+										<span class="year" th:text="${#dates.format(evento.data, 'yyyy')}"></span>
+									</time>
+									<div class="info">
+										<h2 class="title" th:text="${evento.nome}"></h2>
+										<p class="desc">
+											Casa de Show:<span th:text="${evento.casashow.nome}"></span>
+										</p>
+										<ul>
+											<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Comprar</a></li>
+										</ul>
+									</div>
+									<!--
+									<div class="social">
+										<ul>
+											<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+											<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+											<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+										</ul>
+									</div>
+									-->
+								</li>
 							</ul>
 						</div>
-	
 					</div>
-					<!-- /.row -->
-	
 				</div>
-				<!-- /.col-lg-9 -->
-	
 			</div>
-			<!-- /.row -->
-	
 		</div>
-		<!-- /.container -->
 	</section>
 </html>

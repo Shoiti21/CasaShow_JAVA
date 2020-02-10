@@ -3,6 +3,8 @@ package br.com.show.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -20,6 +24,8 @@ public class Eventos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message = "O campo Nome é obrigatorio!")
+	@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
     @ManyToOne
     @JoinColumn
@@ -27,12 +33,13 @@ public class Eventos {
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
+    @Enumerated(EnumType.STRING)
 	private Genero genero;
 	@NumberFormat(pattern="#,##0.00")
 	private double valor;
 	private int qtdIngressoMax;
 	private int qtdIngresso;
-	
+
 	public double getValor() {
 		return valor;
 	}

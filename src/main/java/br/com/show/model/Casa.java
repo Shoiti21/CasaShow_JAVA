@@ -13,10 +13,10 @@ public class Casa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotEmpty(message = "O campo Nome é obrigatorio!")
-	//@NotNull(message="O campo Nome é obrigatorio!")
+	@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
 	@NotEmpty(message = "O campo Local é obrigatorio!")
-	//@NotNull(message="O campo Local é obrigatorio!")
+	@NotNull(message="O campo Local é obrigatorio!")
 	private String local;
 	public Long getId() {
 		return id;
