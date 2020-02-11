@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" 
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="https://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorator="Layout">
 	<head>
@@ -9,46 +9,15 @@
 	<section layout:fragment="conteudo">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3">
-					<h1 class="my-4">Shop Name</h1>
-					<div class="list-group">
-						<a href="#" class="list-group-item">Category 1</a> <a href="#"
-							class="list-group-item">Category 2</a> <a href="#"
-							class="list-group-item">Category 3</a>
-					</div>
-				</div>
-				<div class="col-lg-9">
+				<div class="col-xl-12">
 					<div style="margin-top: 40px;" class="row">
-							<form class="form-inline my-2 my-lg-0">
-								<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-								<button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
-							</form>
-							<button type="button" class="btn btn-primary ml-auto" onclick="window.location.href='/registrar/evento'">Novo evento</button>
+						<form class="form-inline my-2 my-lg-0" method="post" action="/lista" th:object="${filtro}">
+							<input class="form-control mr-sm-2" type="search" placeholder="Nome do Evento" aria-label="Search" th:field="*{nome}">
+							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+						</form>
+						<button type="button" class="btn btn-primary ml-auto" onclick="window.location.href='/registrar/evento'">Novo evento</button>
 						<div style="margin-top: 20px;" class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
 							<ul class="event-list">
-								<li>
-									<time datetime="2014-07-20 0000">
-										<span class="day">8</span>
-										<span class="month">Jul</span>
-										<span class="year">2014</span>
-										<span class="time">12:00 AM</span>
-									</time>
-									<div class="info">
-										<h2 class="title">One Piece Unlimited World Red</h2>
-										<p class="desc">PS Vita</p>
-										<ul>
-											<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Website</a></li>
-											<li style="width:50%;"><span class="fa fa-money"></span> $39.99</li>
-										</ul>
-									</div>
-									<div class="social">
-										<ul>
-											<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-											<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-											<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-										</ul>
-									</div>
-								</li>
 								<li th:each="evento : ${list_evento}">
 									<time>
 										<span class="day" th:text="${#dates.format(evento.data, 'dd')}"></span>
@@ -58,23 +27,19 @@
 									<div class="info">
 										<h2 class="title" th:text="${evento.nome}"></h2>
 										<p class="desc">
-											Casa de Show:<span th:text="${evento.casashow.nome}"></span>
+											Casa de Show: <span th:text="${evento.casashow.nome}"></span><br>
+											Local: <span th:text="${evento.casashow.local}"></span><br>
 										</p>
 										<ul>
-											<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Comprar</a></li>
+											<li style="width:50%;"><a th:href="@{/comprar/{id_evento}(id_evento=${evento.id})}"><span class="fa fa-globe"></span> Comprar</a></li>
 										</ul>
 									</div>
-									<!--
 									<div class="social">
-										<ul>
-											<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-											<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-											<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-										</ul>
+										<span th:text="|R$ ${{evento.valor}}|"></span>
 									</div>
-									-->
-								</li>
+								</li>	
 							</ul>
+							<span th:if="${#lists.isEmpty(list_evento)}" style="text-align: center; font-size: 20pt;"> Não tem eventos</span>
 						</div>
 					</div>
 				</div>

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.i18n.FixedLocaleResolver;
@@ -23,6 +25,7 @@ import br.com.show.model.Eventos;
 import br.com.show.model.Genero;
 import br.com.show.repository.repCasaShow;
 import br.com.show.repository.repEventos;
+import br.com.show.repository.filter.EventoFiltro;
 
 @Controller
 public class SiteController {
@@ -42,15 +45,16 @@ public class SiteController {
 		return mv;
 	}
 	@RequestMapping("/lista")
-	public ModelAndView listaShow() {
-		List<Eventos> todosEvento=repEventos.findAll();
+	public ModelAndView listaShow(@ModelAttribute("filtro") EventoFiltro filtro) {
+		String nome=filtro.getNome()==null || filtro.getNome().isEmpty() ? "%":filtro.getNome();
 		ModelAndView mv=new ModelAndView("page_list");
+		if(nome=="%") {
+			List<Eventos> todosEvento=repEventos.findAll();
+			mv.addObject("list_evento", todosEvento);
+			return mv;
+		}
+		List<Eventos> todosEvento=repEventos.findByNomeContaining(nome);
 		mv.addObject("list_evento", todosEvento);
-		return mv;
-	}
-	@RequestMapping("/carrinho")
-	public ModelAndView carrinho() {
-		ModelAndView mv=new ModelAndView("page_carrinho");
 		return mv;
 	}
 //-------------------------------------------------------------------------------------	
@@ -120,6 +124,23 @@ public class SiteController {
 		mv.addObject("genero", Genero.values());
 		mv.addObject("list_casa", todasCasas);
 		mv.addObject(eventos.get());
+		return mv;
+	}
+	@RequestMapping(value="/editarEvento/{evento_id}", method=RequestMethod.DELETE)
+	public ModelAndView excluir(@PathVariable Long evento_id) {
+		repEventos.deleteById(evento_id);
+		ModelAndView mv=new ModelAndView("redirect:/registrar/show");
+		return mv;
+	}
+//-------------------------------------------------------------------------------------
+	@RequestMapping("/carrinho")
+	public ModelAndView carrinho() {
+		ModelAndView mv=new ModelAndView("page_carrinho");
+		return mv;
+	}
+	@RequestMapping("/comprar/{id_evento}")
+	public ModelAndView addcarrinho() {
+		ModelAndView mv=new ModelAndView("page_carrinho");
 		return mv;
 	}
 }
