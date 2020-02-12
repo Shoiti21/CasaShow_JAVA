@@ -3,21 +3,21 @@
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
-	<div class="modal fade" id="confirmarExclusao" tabindex="-1" data-keyboard="false" data-backdrop="static">
+	<div class="modal fade" id="confirmarExclusaoEvento" tabindex="-1" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog" role="document">
-			<form action="/lista" method="post">
-				<input type="hidden" name="_method" value="DELETE">
+			<form action="/editarEvento" method="POST">
+				<!--<input type="hidden" name="_method" value="DELETE"/>-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h3>Você deseja excluir esse evento?</h3>
+						<h4></h4>
 						<button type="button" class="close" data-dismiss="modal"></button>
 					</div>
 					<div class="modal-body">
-						<span>Todas as informações será apagados no banco de dados.</span>
+						<span>Todas as informações desse evento será apagado no banco de dados.</span>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary">Excluir</button>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Excluir</button>
 					</div>
 				</div>
 			</form>

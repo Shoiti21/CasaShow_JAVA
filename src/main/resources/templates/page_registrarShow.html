@@ -11,15 +11,7 @@
 	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${casa}">
 		<div class="container" style="margin-top: 16px;">
 			<h1> CASA DE SHOW </h1>
-			<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(sucesso_show)}">
-				<button type="button" class="close" data-dismiss="alert"></button>
-				<span th:text="sucesso_show"></span>
-			</div>
-			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-				<div th:each="detailedError : ${#fields.detailedErrors()}">
-					<span th:text="${detailedError.message}"></span>
-				</div>
-			</div>
+			<div layout:insert="mensagem"></div>
 			<div class="card">
 				<div class="card-header">
 					<h4> Registrar </h4>

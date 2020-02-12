@@ -4,18 +4,18 @@
 	layout:decorator="Layout">
 <head>
 <title>CASA DE SHOW</title>
-<link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
 </head>
 <section layout:fragment="conteudo">
 	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${eventos}">
-		<div class="container-fluid" style="margin-top: 16px;">
+		<div class="container-fluid" style="margin-top: 40px;">
 			<h1> EVENTO </h1>
+			<div layout:insert="mensagem"></div>
 			<div class="card">
 				<div class="card-header">
 					<h4> Lista de Eventos <a style="float: right;" class="btn btn-primary btn-sm" href="/registrar/evento" role="button">Novo Evento</a></h4>
 				</div>
 				<div class="card-body">
-					<table class="table table-bordered">
+					<table class="table table-hover table-bordered">
 						<thead class="text-muted">
 							<tr>
 								<th rowspan=2 scope="col" width="6%" style="vertical-align: middle;">ID</th>
@@ -36,10 +36,10 @@
 							<tr th:each="evento : ${list_evento}">
 								<td th:text="${evento.id}" style="text-align: center; vertical-align: middle;"></td>
 								<td th:text="${evento.nome}" style="text-align: center; vertical-align: middle;"></td>
-								<td th:text="${evento.data}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="${{evento.data}}" style="text-align: center; vertical-align: middle;"></td>
 								<td th:text="${evento.casashow.nome}" style="text-align: center; vertical-align: middle;"></td>
 								<td th:text="${evento.genero.tipo}" style="text-align: center; vertical-align: middle;"></td>
-								<td th:text="${evento.valor}" style="text-align: center; vertical-align: middle;"></td>
+								<td th:text="|R$ ${{evento.valor}}|" style="text-align: center; vertical-align: middle;"></td>
 								<td th:text="${evento.qtdIngressoMax}" style="text-align: center; vertical-align: middle;"></td>
 								<td th:text="${evento.qtdIngresso}" style="text-align: center; vertical-align: middle;"></td>
 								<td style="text-align: center; vertical-align: middle;">
@@ -48,7 +48,7 @@
 											<a class="btn btn-info btn-sm" th:href="@{/editarEvento/{evento_id}(evento_id=${evento.id})}">EDITAR</a>
 										</label> 
 										<label> 
-											<a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirmarExclusao" th:attr="data-idevento=${evento.id}">REMOVER</a>
+											<a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirmarExclusaoEvento" th:attr="data-idevento=${evento.id}, data-nomeevento=${evento.nome}">REMOVER</a>
 										</label>
 									</div>
 								</td>
@@ -59,6 +59,6 @@
 			</div>
 		</div>
 	</form>
-	<div layout:insert="modalExclusao"></div>
+	<div layout:insert="modalExclusaoEvento"></div>
 </section>
 </html>

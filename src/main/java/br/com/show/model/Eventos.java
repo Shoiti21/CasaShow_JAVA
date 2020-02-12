@@ -1,5 +1,6 @@
 package br.com.show.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -30,20 +33,27 @@ public class Eventos {
     @ManyToOne
     @JoinColumn
 	private Casa casashow;
+	@NotNull(message="O campo Data é obrigatorio!")
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
     @Enumerated(EnumType.STRING)
 	private Genero genero;
-	@NumberFormat(pattern="#,##0.00")
-	private double valor;
+	@NotNull(message="O campo Valor é obrigatorio!")
+	@DecimalMin(value="0.01", message="O valor não pode ser 0,00!")
+	@DecimalMax(value="999999.99", message="O valor não pode ser maior que 999.999,99!")
+	@NumberFormat(pattern = "#,##0.00")
+	private BigDecimal valor;
+	@NotNull(message="O campo Total de Ingressos é obrigatorio!")
+	@DecimalMin(value="1", message="A quantidade não pode ser 0!")
+	@DecimalMax(value="999999", message="A quantidade não pode ser maior que 999.999!")
 	private int qtdIngressoMax;
 	private int qtdIngresso;
 
-	public double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 	public Long getId() {

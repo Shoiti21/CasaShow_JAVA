@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="https://www.thymeleaf.org" 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorator="Layout">
 	<head>
@@ -31,7 +31,7 @@
 											Local: <span th:text="${evento.casashow.local}"></span><br>
 										</p>
 										<ul>
-											<li style="width:50%;"><a th:href="@{/comprar/{id_evento}(id_evento=${evento.id})}"><span class="fa fa-globe"></span> Comprar</a></li>
+											<li style="width:50%;"><a th:href="@{/carrinho/{id_evento}(id_evento=${evento.id})}"><span class="fa fa-globe"></span> Comprar</a></li>
 										</ul>
 									</div>
 									<div class="social">

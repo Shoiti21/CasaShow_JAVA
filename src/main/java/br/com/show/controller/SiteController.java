@@ -1,5 +1,6 @@
 package br.com.show.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -12,14 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
+import br.com.show.model.Carrinho;
 import br.com.show.model.Casa;
 import br.com.show.model.Eventos;
 import br.com.show.model.Genero;
@@ -63,7 +60,7 @@ public class SiteController {
 		List<Casa> todasCasas=repShow.findAll();
 		ModelAndView mv=new ModelAndView("page_gerShow");
 		mv.addObject("list_casa", todasCasas);
-		//mv.addObject(new Casa());
+		mv.addObject(new Casa());
 		return mv;
 	}
 	@RequestMapping("/registrar/show")
@@ -88,13 +85,20 @@ public class SiteController {
 		mv.addObject(casa.get());
 		return mv;
 	}
+	@RequestMapping(value="/editarShow/{show_id}", method=RequestMethod.POST)
+	public ModelAndView excluir_show(@PathVariable Long show_id, RedirectAttributes attributes) {
+		repShow.deleteById(show_id);
+		ModelAndView mv=new ModelAndView("redirect:/gerShow");
+		attributes.addFlashAttribute("sucesso_evento", "Casa de Show excluido com sucesso!");
+		return mv;
+	}
 //-------------------------------------------------------------------------------------
 	@RequestMapping("/gerEvento")
 	public ModelAndView ger_Evento() {
 		List<Eventos> todosEvento=repEventos.findAll();
 		ModelAndView mv=new ModelAndView("page_gerEvento");
 		mv.addObject("list_evento", todosEvento);
-		//mv.addObject(new Eventos());
+		mv.addObject(new Eventos());
 		return mv;
 	}
 	@RequestMapping("/registrar/evento")
@@ -126,21 +130,39 @@ public class SiteController {
 		mv.addObject(eventos.get());
 		return mv;
 	}
-	@RequestMapping(value="/editarEvento/{evento_id}", method=RequestMethod.DELETE)
-	public ModelAndView excluir(@PathVariable Long evento_id) {
+	@RequestMapping(value="/editarEvento/{evento_id}", method=RequestMethod.POST)
+	public ModelAndView excluir_Evento(@PathVariable Long evento_id, RedirectAttributes attributes) {
 		repEventos.deleteById(evento_id);
-		ModelAndView mv=new ModelAndView("redirect:/registrar/show");
+		ModelAndView mv=new ModelAndView("redirect:/gerEvento");
+		attributes.addFlashAttribute("sucesso_evento", "Evento excluido com sucesso!");
 		return mv;
 	}
 //-------------------------------------------------------------------------------------
 	@RequestMapping("/carrinho")
 	public ModelAndView carrinho() {
 		ModelAndView mv=new ModelAndView("page_carrinho");
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
-	@RequestMapping("/comprar/{id_evento}")
-	public ModelAndView addcarrinho() {
-		ModelAndView mv=new ModelAndView("page_carrinho");
-		return mv;
+	@RequestMapping("/carrinho/{id_evento}")
+	public ModelAndView compra_carrinho(@PathVariable Long id_evento) {
+		Optional<Eventos> jogo=repEventos.findById(id_evento);
+		List<Eventos> cart=new ArrayList<Eventos>();
+		cart=Carrinho.getListcarrinho();
+		cart.add(jogo.get());
+		Carrinho.setListcarrinho(cart);
+		ModelAndView mv=new ModelAndView("redirect:/carrinho");
+		return mv;	
+	}
+	@RequestMapping("/carrinhoo/{id_evento}")
+	public ModelAndView remover_carrinho(@PathVariable Long id_evento) {
+		Optional<Eventos> jogo=repEventos.findById(id_evento);
+		List<Eventos> cart=new ArrayList<Eventos>();
+		cart=Carrinho.getListcarrinho();
+		System.out.println(cart.indexOf(id_evento));
+		Carrinho.setListcarrinho(cart);
+		ModelAndView mv=new ModelAndView("redirect:/carrinho");
+		return mv;	
 	}
 }

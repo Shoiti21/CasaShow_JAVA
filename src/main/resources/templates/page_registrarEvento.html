@@ -10,15 +10,7 @@
 	<form class="form-horizontal" method="POST" action="/registrar/salvarevento" th:object="${eventos}">
 		<div class="container" style="margin-top: 16px;">
 			<h1 style="margin-top: 16px;"> EVENTO </h1>
-			<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(sucesso_evento)}">
-				<button type="button" class="close" data-dismiss="alert"></button>
-				<span th:text="${sucesso_evento}"></span>
-			</div>
-			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-				<div th:each="detailedError : ${#fields.detailedErrors()}">
-					<span th:text="${detailedError.message}"></span>
-				</div>
-			</div>
+			<div layout:insert="mensagem"></div>
 			<div class="card">
 				<div class="card-header">
 					<h4> Registrar </h4>
@@ -58,7 +50,7 @@
 								<div class="input-group-prepend">
 									<div class="input-group-text">R$</div>
 								</div>
-								<input type="text" class="form-control" id="InputNomeShow" placeholder="0,00" th:field="*{valor}">
+								<input type="text" class="form-control js-currency" id="InputNomeShow" th:field="*{valor}">
 							</div>
 						</div>
 					</div>
