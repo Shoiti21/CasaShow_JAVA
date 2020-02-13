@@ -219,7 +219,8 @@ public class SiteController {
 			}
 			repEventos.save(produtos.getProduto());
 		}
-		Carrinho.setListcarrinho(null);
+		cart.clear();
+		Carrinho.setListcarrinho(cart);
 		
 		ModelAndView mv=new ModelAndView("redirect:/carrinho");
 		attributes.addFlashAttribute("mensagem", "Compra finalizada!");
