@@ -1,8 +1,8 @@
 package br.com.show.model;
 
 public enum Genero {
-	ROCK("Administrador"),
-	POP("Cliente"),
+	ROCK("Rock"),
+	POP("POP"),
 	HIPHOP("Hip-Hop"),
 	PAGODE("Pagode"),
 	SERTANEJO("Sertanejo"),

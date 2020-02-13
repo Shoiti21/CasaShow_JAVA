@@ -3,9 +3,9 @@
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
-	<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(sucesso_evento)}">
+	<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
 		<button type="button" class="close" data-dismiss="alert"></button>
-		<span th:text="${sucesso_evento}"></span>
+		<span th:text="${mensagem}"></span>
 	</div>
 	<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
 		<div th:each="detailedError : ${#fields.detailedErrors()}">

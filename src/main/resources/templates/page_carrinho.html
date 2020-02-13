@@ -4,98 +4,63 @@
 	layout:decorator="Layout">
 	<head>
 		<title>CASA DE SHOW</title>
-		<link rel="stylesheet" type="text/css" href="/css/listshow.css"></link>
 	</head>
 	<section layout:fragment="conteudo">
 		<div class="container">
-			<form th:object="${carrinho}">
+			<form th:object="${carrinho}" action="/finalizar">
 				<div th:insert="mensagem"></div>
 			    <div class="row">
 			        <div class="col-sm-12 col-md-10 col-md-offset-1">
 			            <table class="table table-hover">
 			                <thead>
 			                    <tr>
-			                        <th>Produto</th>
-			                        <th>Quantidade</th>
-			                        <th class="text-center">Preço</th>
-			                        <th class="text-center">Total</th>
-			                        <th> </th>
+			                        <th class="col-sm-8 col-md-6">Produto</th>
+			                        <th class="col-sm-1 col-md-1">Quantidade</th>
+			                        <th class="col-sm-1 col-md-1 text-center">Preço</th>
+			                        <th class="col-sm-1 col-md-1 text-center">Total</th>
+			                        <th class="col-sm-1" > </th>
 			                    </tr>
 			                </thead>
 			                <tbody>
 			                    <tr th:each="listcart : ${listcarrinho}">
-			                        <td class="col-sm-8 col-md-6">
-			                        <div class="media">
-			                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-			                            <div class="media-body">
-			                                <h4 class="media-heading" th:text="${listcart.nome}"></h4>
-			                                <h6 class="media-heading" th:text="| na ${listcart.casashow.nome}|"></h6>
-			                                <span>Status: </span>
-		                                	<span class="text-success" th:if="${listcart.qtdIngresso != 0}"><strong>Disponivel</strong></span>
-		                                	<span class="text-danger" th:if="${listcart.qtdIngresso == 0}"><strong>Indisponivel</strong></span>
-			                            </div>
-			                        </div></td>
-			                        <td class="col-sm-1 col-md-1" style="text-align: center">
-			                        <input type="email" class="form-control" id="exampleInputEmail1" value="3">
-			                        </td>
-			                        <td class="col-sm-1 col-md-1 text-center"><strong th:text="|R$ ${{listcart.valor}}|"></strong></td>
-			                        <td class="col-sm-1 col-md-1 text-center"><strong>$14.61</strong></td>
-			                        <td class="col-sm-1 col-md-1">
-			                        <a type="button" class="btn btn-danger" th:href="@{/carrinhoo/{id_evento}(id_evento=${listcart.id})}">REMOVER</a></td>
-			                    </tr>
-			                    <tr>
-			                        <td class="col-md-6">
-			                        <div class="media">
-			                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-			                            <div class="media-body">
-			                                <h4 class="media-heading"><a href="#">Product name</a></h4>
-			                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-			                                <span>Status: </span><span class="text-warning"><strong>Leaves warehouse in 2 - 3 weeks</strong></span>
-			                            </div>
-			                        </div></td>
-			                        <td class="col-md-1" style="text-align: center">
-			                        <input type="email" class="form-control" id="exampleInputEmail1" value="2">
-			                        </td>
-			                        <td class="col-md-1 text-center"><strong>$4.99</strong></td>
-			                        <td class="col-md-1 text-center"><strong>$9.98</strong></td>
-			                        <td class="col-md-1">
-			                        <button type="button" class="btn btn-danger">
-			                            <span class="glyphicon glyphicon-remove"></span> Remove
-			                        </button></td>
-			                    </tr>
-			                    <tr>
-			                        <td></td>
-			                        <td></td>
-			                        <td></td>
-			                        <td><h5>Subtotal</h5></td>
-			                        <td class="text-right"><h5><strong>$24.59</strong></h5></td>
-			                    </tr>
-			                    <tr>
-			                        <td></td>
-			                        <td></td>
-			                        <td></td>
-			                        <td><h5>Estimated shipping</h5></td>
-			                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
-			                    </tr>
-			                    <tr>
-			                        <td></td>
-			                        <td></td>
-			                        <td></td>
-			                        <td><h3>Total</h3></td>
-			                        <td class="text-right"><h3><strong>$31.53</strong></h3></td>
-			                    </tr>
-			                    <tr>
-			                        <td></td>
-			                        <td></td>
-			                        <td></td>
 			                        <td>
-			                        <button type="button" class="btn btn-default">
-			                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-			                        </button></td>
+				                        <div class="media">
+				                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+				                            <div class="media-body">
+				                                <h4 class="media-heading" th:text="${listcart.produto.nome}"></h4>
+				                                <h6 class="media-heading" th:text="| na ${listcart.produto.casashow.nome}|"></h6>
+				                                <span>Status: </span>
+			                                	<span class="text-success" th:if="${listcart.produto.qtdIngresso != 0}"><strong>Disponivel</strong></span>
+			                                	<span class="text-danger" th:if="${listcart.produto.qtdIngresso == 0}"><strong>Indisponivel</strong></span>
+				                            </div>
+				                        </div>
+			                        </td>
+			                        <td style="text-align: center">
+			                        	<input type="number" class="form-control" id="exampleInputEmail1" th:value="${listcart.qtd_produto}">
+			                        </td>
+			                        <td><strong th:text="|R$ ${{listcart.produto.valor}}|"></strong></td>
+			                        <td><strong th:text="|R$ ${{listcart.produto.valor}}|"></strong></td>
 			                        <td>
-			                        <button type="button" class="btn btn-success">
-			                            Checkout <span class="glyphicon glyphicon-play"></span>
-			                        </button></td>
+			                        	<a type="button" class="btn btn-danger" th:href="@{/remover/{id_evento}(id_evento=${listcart.produto.id})}">REMOVER</a>
+			                        </td>
+			                    </tr>
+			           
+        			            <tr>
+			                        <td style="text-align: center;" colspan=5 th:if="${#lists.isEmpty(listcarrinho)}">
+			                        	<span>Carrinho vázio</span>
+			       					</td>
+			                    </tr>
+			                   
+			                    <tr th:if="${!#lists.isEmpty(listcarrinho)}">
+			                        <td colspan=3></td>
+			                        <td><h5>Total</h5></td>
+			                        <td class="text-right"><h5><strong th:text="|R$ ${total}|"></strong></h5></td>
+			                    </tr>
+			                    <tr th:if="${!#lists.isEmpty(listcarrinho)}">
+			                        <td colspan=4></td>
+			                        <td>
+				                        <button type="submit" class="btn btn-success">FINALIZAR</button>
+			                        </td>
 			                    </tr>
 			                </tbody>
 			            </table>
