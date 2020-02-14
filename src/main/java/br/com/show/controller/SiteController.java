@@ -1,7 +1,7 @@
 package br.com.show.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +21,9 @@ import br.com.show.model.Casa;
 import br.com.show.model.Eventos;
 import br.com.show.model.Genero;
 import br.com.show.model.Produto;
+import br.com.show.model.Registro;
 import br.com.show.repository.repCasaShow;
+import br.com.show.repository.repCompras;
 import br.com.show.repository.repEventos;
 import br.com.show.repository.filter.EventoFiltro;
 
@@ -31,6 +33,9 @@ public class SiteController {
 	private repCasaShow repShow;
 	@Autowired
 	private repEventos repEventos;
+	@Autowired
+	private repCompras repCompras;
+	
 	
 	@RequestMapping
 	public ModelAndView home() {
@@ -49,10 +54,16 @@ public class SiteController {
 		if(nome=="%") {
 			List<Eventos> todosEvento=repEventos.findAll();
 			mv.addObject("list_evento", todosEvento);
+			
+			mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+			mv.addObject(new Carrinho());
 			return mv;
 		}
 		List<Eventos> todosEvento=repEventos.findByNomeContaining(nome);
 		mv.addObject("list_evento", todosEvento);
+		
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
 //-------------------------------------------------------------------------------------	
@@ -64,12 +75,18 @@ public class SiteController {
 		ModelAndView mv=new ModelAndView("page_gerShow");
 		mv.addObject("list_casa", todasCasas);
 		mv.addObject(new Casa());
+		
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
 	@RequestMapping("/registrar/show") //REGISTRAR
 	public ModelAndView registrar_Show() {
 		ModelAndView mv=new ModelAndView("page_registrarShow");
 		mv.addObject(new Casa());
+		
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
 	@RequestMapping(value="/registrar/salvarshow", method=RequestMethod.POST) //SALVAR
@@ -104,6 +121,9 @@ public class SiteController {
 		ModelAndView mv=new ModelAndView("page_gerEvento");
 		mv.addObject("list_evento", todosEvento);
 		mv.addObject(new Eventos());
+		
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
 	@RequestMapping("/registrar/evento") //REGISTRAR
@@ -133,6 +153,9 @@ public class SiteController {
 		mv.addObject("genero", Genero.values());
 		mv.addObject("list_casa", todasCasas);
 		mv.addObject(eventos.get());
+		
+		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
+		mv.addObject(new Carrinho());
 		return mv;
 	}
 	@RequestMapping(value="/editarEvento/{evento_id}", method=RequestMethod.POST) //REMOVER
@@ -148,21 +171,8 @@ public class SiteController {
 	@RequestMapping("/carrinho") //PÁGINA
 	public ModelAndView carrinho() {
 		ModelAndView mv=new ModelAndView("page_carrinho");
-		List<Produto> cart=new ArrayList<Produto>();
-		cart=Carrinho.getListcarrinho();
-		BigDecimal totalvalor=new BigDecimal(0);;
-		if(!Carrinho.getListcarrinho().isEmpty()) {
-			for (Produto produto : cart) {
-				BigDecimal valor=produto.getProduto().getValor();
-				BigDecimal multiplicador=new BigDecimal(produto.getQtd_produto());
-				valor=valor.multiply(multiplicador);
-				totalvalor=totalvalor.add(valor);
-			}
-		}
 		
-		Carrinho.setTotalvalor(totalvalor);
 		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
-		mv.addObject("total", Carrinho.getTotalvalor());
 		mv.addObject(new Carrinho());
 		return mv;
 	}
@@ -209,20 +219,32 @@ public class SiteController {
 	}
 	@RequestMapping("/finalizar") //FINALIZAR COMPRA
 	public ModelAndView finalizar_compra(RedirectAttributes attributes) {
+		ModelAndView mv=new ModelAndView("redirect:/carrinho");
 		List<Produto> cart=new ArrayList<Produto>();
+		Registro regCompras=new Registro();
 		cart=Carrinho.getListcarrinho();
 		
+		Date data = new Date(); 
+
 		for(Produto produtos : cart) {
 			int estoque=produtos.getProduto().getQtdIngresso()-produtos.getQtd_produto();
 			if(estoque>=0) {
+				regCompras.setData(data);
+				regCompras.setEvento(produtos.getProduto());
+				regCompras.setQtd(produtos.getQtd_produto());
+				System.out.println(produtos.getQtd_produto());
 				produtos.getProduto().setQtdIngresso(estoque);
 			}
+			else {
+				attributes.addFlashAttribute("erromensagem", "O produto não está disponível!");
+				return mv;
+			}
+			repCompras.save(regCompras);
 			repEventos.save(produtos.getProduto());
 		}
 		cart.clear();
 		Carrinho.setListcarrinho(cart);
 		
-		ModelAndView mv=new ModelAndView("redirect:/carrinho");
 		attributes.addFlashAttribute("mensagem", "Compra finalizada!");
 		return mv;
 	}

@@ -6,9 +6,9 @@
 <title>CASA DE SHOW</title>
 </head>
 <section layout:fragment="conteudo">
-	<form class="form-horizontal" method="POST" action="/registrar/salvarevento" th:object="${eventos}">
-		<div class="container" style="margin-top: 16px;">
-			<h1 style="margin-top: 16px;"> EVENTO </h1>
+	<form class="form-horizontal" method="POST" action="/registrar/salvarevento" th:object="${eventos}" th:if="${!#lists.isEmpty(list_casa)}">
+		<div class="container" style="margin-top: 40px;">
+			<h1> EVENTO </h1>
 			<div layout:insert="mensagem"></div>
 			<div class="card">
 				<div class="card-header">
@@ -58,5 +58,10 @@
 			</div>
 		</div>
 	</form>
+	<div class="container" style="margin-top: 200px;"  th:if="${#lists.isEmpty(list_casa)}">
+		<h4> Para registrar um evento, é necessario ter pelo menos uma Casa de Show registrado. </h4>
+		<h6 style="text-align:center;"> Em 5 segundos, a página será redirecionado para a anterior!  </h6>
+		<meta http-equiv="refresh" content="5;url=/gerEvento" />
+	</div>
 </section>
 </html>

@@ -5,7 +5,7 @@ $('#confirmarExclusaoEvento').on('show.bs.modal', function(event){
 	
 	var modal=$(this);
 	var form=modal.find('form');
-	var action=form.attr('action');
+	var action=form.data('urlbase');
 	if(!action.endsWith('/')){
 		action+='/';
 	}
@@ -21,7 +21,7 @@ $('#confirmarExclusaoShow').on('show.bs.modal', function(event){
 	
 	var modal=$(this);
 	var form=modal.find('form');
-	var action=form.attr('action');
+	var action=form.data('urlbase');
 	if(!action.endsWith('/')){
 		action+='/';
 	}
