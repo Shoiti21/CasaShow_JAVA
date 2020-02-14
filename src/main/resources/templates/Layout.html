@@ -29,7 +29,7 @@
 						<li class="nav-item"><a class="nav-link" href="/lista">EVENTOS</a></li>
 						<li sec:authorize="hasRole('ACESSO_ADM')" class="nav-item">
 							<a class="nav-link" href="/carrinho"> 
-								<i><span id="carrinho" class="badge badge-danger" th:text="${#aggregates.sum(listcarrinho.![qtd_produto])}"></span></i> CARRINHO
+								<i th:if="${!#lists.isEmpty(listcarrinho)}"><span id="carrinho" class="badge badge-danger" th:text="${#aggregates.sum(listcarrinho.![qtd_produto])}"></span></i> CARRINHO
 							</a>
 						</li>
 					</ul>
