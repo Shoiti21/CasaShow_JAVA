@@ -43,9 +43,8 @@ public class SiteController {
 		return mv;
 	}
 	@RequestMapping("/login")
-	public ModelAndView login() {
-		ModelAndView mv=new ModelAndView("login");
-		return mv;
+	public String login() {
+		return "login";
 	}
 	@RequestMapping("/lista")
 	public ModelAndView listaShow(@ModelAttribute("filtro") EventoFiltro filtro) {

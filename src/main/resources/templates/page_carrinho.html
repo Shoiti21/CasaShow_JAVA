@@ -25,8 +25,8 @@
 			                    <tr th:each="listcart : ${listcarrinho}">
 			                        <td>
 				                        <div class="media">
-				                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-				                            <div class="media-body">
+				                            <a class="thumbnail pull-left" href="#"> <img class="media-object" th:src="@{${'/img/' + listcart.produto.genero + '.png'}}" style="width: 72px; height: 72px;"> </a>
+				                            <div class="media-body" style="margin-left:20px;">
 				                                <h4 class="media-heading" th:text="${listcart.produto.nome}"></h4>
 				                                <h6 class="media-heading" th:text="| na ${listcart.produto.casashow.nome}|"></h6>
 				                                <span>Status: </span>

@@ -31,7 +31,7 @@ public class Eventos {
 	@NotEmpty(message = "O campo Nome é obrigatorio!")
 	@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
 	private Casa casashow;
 	@NotNull(message="O campo Data é obrigatorio!")

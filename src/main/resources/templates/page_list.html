@@ -10,12 +10,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-12">
-					<div style="margin-top: 40px;" class="row">
+					<div class="row" style="margin-top: 40px;">
 						<form class="form-inline my-2 my-lg-0" method="post" action="/lista" th:object="${filtro}">
 							<input class="form-control mr-sm-2" type="search" placeholder="Nome do Evento" aria-label="Search" th:field="*{nome}">
 							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
 						</form>
-						<button type="button" class="btn btn-primary ml-auto" onclick="window.location.href='/registrar/evento'">Novo evento</button>
+						<button type="button" class="btn btn-primary ml-auto" onclick="window.location.href='/registrar/evento'" style="float: right;" sec:authorize="hasRole('ADMIN')">Novo evento</button>
+					</div>
+					<div class="row">
+
 						<div style="margin-top: 20px;" class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
 							<ul class="event-list">
 								<li th:each="evento : ${list_evento}">
@@ -32,7 +35,7 @@
 											Local: <span th:text="${evento.casashow.local}"></span><br>
 										</p>
 										<ul>
-											<li style="width:50%;"><a th:href="@{/carrinho/{id_evento}(id_evento=${evento.id})}"><span class="fa fa-globe"></span> Comprar</a></li>
+											<li style="width:50%;" sec:authorize="hasRole('CLIENT')"><a th:href="@{/carrinho/{id_evento}(id_evento=${evento.id})}"><span class="fa fa-globe"></span> Comprar</a></li>
 										</ul>
 									</div>
 									<div class="social">

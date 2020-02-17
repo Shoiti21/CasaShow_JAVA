@@ -1,14 +1,15 @@
 /* BASIC */
 
-html {
-  background-color: #56baed;
-}
 
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
+	background-image:url('/img/background.png'); 
+	background-repeat:no-repeat; 
+	background-position:center; 
+	background-size:cover; 
+	padding:10px;
 }
-
 a {
   color: #92badd;
   display:inline-block;
@@ -241,7 +242,8 @@ input[type=text]:placeholder {
 }
 
 .underlineHover:hover {
-  color: #0d0d0d;
+	text-decoration: none;
+  color: #56baed;
 }
 
 .underlineHover:hover:after{
