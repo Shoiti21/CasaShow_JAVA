@@ -221,7 +221,6 @@ public class SiteController {
 	public ModelAndView finalizar_compra(RedirectAttributes attributes) {
 		ModelAndView mv=new ModelAndView("redirect:/carrinho");
 		List<Produto> cart=new ArrayList<Produto>();
-		Registro regCompras=new Registro();
 		cart=Carrinho.getListcarrinho();
 		
 		Date data = new Date(); 
@@ -229,18 +228,18 @@ public class SiteController {
 		for(Produto produtos : cart) {
 			int estoque=produtos.getProduto().getQtdIngresso()-produtos.getQtd_produto();
 			if(estoque>=0) {
+				Registro regCompras=new Registro();
 				regCompras.setData(data);
 				regCompras.setEvento(produtos.getProduto());
 				regCompras.setQtd(produtos.getQtd_produto());
-				System.out.println(produtos.getQtd_produto());
 				produtos.getProduto().setQtdIngresso(estoque);
+				repCompras.save(regCompras);
+				repEventos.save(produtos.getProduto());
 			}
 			else {
 				attributes.addFlashAttribute("erromensagem", "O produto não está disponível!");
 				return mv;
 			}
-			repCompras.save(regCompras);
-			repEventos.save(produtos.getProduto());
 		}
 		cart.clear();
 		Carrinho.setListcarrinho(cart);

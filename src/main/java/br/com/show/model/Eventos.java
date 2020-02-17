@@ -3,6 +3,7 @@ package br.com.show.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +31,7 @@ public class Eventos {
 	@NotEmpty(message = "O campo Nome é obrigatorio!")
 	@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
 	private Casa casashow;
 	@NotNull(message="O campo Data é obrigatorio!")

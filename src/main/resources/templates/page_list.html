@@ -24,9 +24,10 @@
 										<span class="month" th:text="${#dates.format(evento.data, 'MMM')}"></span>
 										<span class="year" th:text="${#dates.format(evento.data, 'yyyy')}"></span>
 									</time>
+									<img th:src="@{${'/img/' + evento.genero + '.png'}}" />
 									<div class="info">
 										<h2 class="title" th:text="${evento.nome}"></h2>
-										<p class="desc">
+										<p class="desc" style="font-size: 14px;">
 											Casa de Show: <span th:text="${evento.casashow.nome}"></span><br>
 											Local: <span th:text="${evento.casashow.local}"></span><br>
 										</p>
