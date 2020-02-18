@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -22,10 +23,16 @@ import br.com.show.model.Eventos;
 import br.com.show.model.Genero;
 import br.com.show.model.Produto;
 import br.com.show.model.Registro;
+import br.com.show.model.Role;
+import br.com.show.model.Usuario;
 import br.com.show.repository.repCasaShow;
 import br.com.show.repository.repCompras;
 import br.com.show.repository.repEventos;
+import br.com.show.repository.repRole;
+import br.com.show.repository.repUsuario;
 import br.com.show.repository.filter.EventoFiltro;
+import br.com.show.security.UserValidator;
+
 
 @Controller
 public class SiteController {
@@ -35,7 +42,10 @@ public class SiteController {
 	private repEventos repEventos;
 	@Autowired
 	private repCompras repCompras;
-	
+	@Autowired
+	private repUsuario repUsuario;
+	@Autowired
+	private repRole repRole;
 	
 	@RequestMapping
 	public ModelAndView home() {
@@ -63,6 +73,28 @@ public class SiteController {
 		
 		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
 		mv.addObject(new Carrinho());
+		return mv;
+	}
+	@RequestMapping("/registrar")
+	public ModelAndView registrar() {
+		ModelAndView mv=new ModelAndView("login_registrar");
+		mv.addObject(new Usuario());
+		return mv;
+	}
+	@RequestMapping(value="/registrar", method=RequestMethod.POST)
+	public ModelAndView salvar(@Validated Usuario usuario, Errors errors) {
+		ModelAndView mv=new ModelAndView("redirect:/registrar");
+	    UserValidator validator = new UserValidator();
+	    validator.validate(usuario,errors);
+		if(errors.hasErrors()) {
+			System.out.println("erro1");
+		}
+		else {
+			System.out.println(usuario.getConfirmarsenha()+" "+usuario.getSenha());
+			usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+			mv.addObject("mensagem", "Conta registrada!");
+			//repUsuario.save(usuario);
+		}
 		return mv;
 	}
 //-------------------------------------------------------------------------------------	

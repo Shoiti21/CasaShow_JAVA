@@ -2,7 +2,6 @@ package br.com.show.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -19,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.csrf().disable().authorizeRequests()
-		.antMatchers("/").permitAll()
+		.antMatchers("/","/registrar","/registrar_salvar").permitAll()
 		.antMatchers("/gerEvento","/registrar/evento","/registrar/salvarevento","/editarEvento/{evento_id}","/gerShow","/registrar/show","/registrar/salvarshow","/editarShow/{show_id}").hasRole("ADMIN")
 		.antMatchers("/carrinho","/carrinho/{id_evento}","/remover/{id_evento}","/finalizar").hasRole("CLIENT")
 		.anyRequest().authenticated()

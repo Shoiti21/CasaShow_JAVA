@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 	<meta charset="UTF-8">
@@ -14,24 +14,27 @@
 <body>
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
+			
 			<!-- Tabs Titles -->
 
 			<!-- Icon -->
 			<div class="fadeIn first" style="margin-top: 40px;">
-				<span>LOGIN</span>
+				<span>CADASTRAR</span>
 			</div>
 
 			<!-- Login Form -->
-			<form method="post" action="/login">
-				<input type="text" class="fadeIn second" name="username" placeholder="login"> 
-				<input type="text" class="fadeIn third" name="password" placeholder="senha"> 
-				<input type="submit" class="fadeIn fourth" value="ENTRAR">
-				<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+			<form method="post" action="/registrar" th:object="${usuario}">
+				<div layout:insert="mensagem"></div>
+				<input type="text" class="fadeIn second" th:field="*{nomeCompleto}" placeholder="Nome Completo">
+				<input type="text" class="fadeIn second" th:field="*{login}" placeholder="login">  
+				<input type="text" class="fadeIn third" th:field="*{senha}" placeholder="senha"> 
+				<input type="text" class="fadeIn third" th:field="*{confirmarsenha}" placeholder="Confirmar senha"> 
+				<input type="submit" class="fadeIn fourth" value="CADASTRAR">
 			</form>
 
 			<!-- Remind Passowrd -->
 			<div id="formFooter">
-				<a class="underlineHover" href="#">Cadastrar</a>
+				<a class="underlineHover" href="/login">Já tenho uma conta</a>
 			</div>
 
 		</div>

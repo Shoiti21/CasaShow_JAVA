@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.persistence.JoinColumn;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +18,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 public class Usuario implements UserDetails{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
+	@Size(min=5)
 	private String login;
+	@NotNull(message="aaaaaaaaaaa")
 	private String nomeCompleto;
+	@NotEmpty(message="bbbbbbbbbbbb")
+	@NotNull(message="cccccccccccc")
 	private String senha;
+    @Transient
+    @NotEmpty(message="ddddddddddd")
+    @NotNull(message="eeeeeeeeee")
+    private String confirmarsenha;
 	@ManyToMany
 	@JoinTable(name="usuarios_roles", joinColumns= @JoinColumn(
 			name="usuario_id", referencedColumnName="login"),
@@ -25,6 +41,12 @@ public class Usuario implements UserDetails{
 			name="role_id", referencedColumnName="nomeRole"))
 	private List<Role> roles;
 	
+	public String getConfirmarsenha() {
+		return confirmarsenha;
+	}
+	public void setConfirmarsenha(String confirmarsenha) {
+		this.confirmarsenha = confirmarsenha;
+	}
 	public List<Role> getRoles() {
 		return roles;
 	}
