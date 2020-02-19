@@ -36,9 +36,9 @@
 				</div>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item"><a class="nav-link" href="/lista">Login</a></li>
+						<li class="nav-item"><a class="nav-link" href="/lista" sec:authorize="!isAuthenticated()">Login</a></li>
 						<li class="nav-item">
-							<button type="button" onclick="window.location.href='/logout'" class="btn btn-danger" style="margin-left: 50px;">LOGOUT</button>
+							<button type="button" onclick="window.location.href='/logout'" class="btn btn-danger" style="margin-left: 50px;" sec:authorize="isAuthenticated()">LOGOUT</button>
 						</li>
 					</ul>
 				</div>

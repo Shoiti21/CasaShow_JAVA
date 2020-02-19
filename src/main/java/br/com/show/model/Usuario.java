@@ -24,15 +24,16 @@ public class Usuario implements UserDetails{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Size(min=5)
+	@NotEmpty(message="Username é obrigatório!")
+	@NotNull(message="Username é obrigatório!")
 	private String login;
-	@NotNull(message="aaaaaaaaaaa")
+	@NotEmpty(message="Nome é obrigatório!")
+	@NotNull(message="Nome é obrigatório!")
 	private String nomeCompleto;
-	@NotEmpty(message="bbbbbbbbbbbb")
-	@NotNull(message="cccccccccccc")
+	@NotEmpty(message="Senha é obrigatório!")
+	@NotNull(message="Senha é obrigatório!")
 	private String senha;
     @Transient
-    @NotEmpty(message="ddddddddddd")
-    @NotNull(message="eeeeeeeeee")
     private String confirmarsenha;
 	@ManyToMany
 	@JoinTable(name="usuarios_roles", joinColumns= @JoinColumn(

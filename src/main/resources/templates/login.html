@@ -22,7 +22,8 @@
 			</div>
 
 			<!-- Login Form -->
-			<form action="/login" method="post">
+			<form action="/login" method="post" th:object="${usuario}">
+				<div layout:insert="mensagem"></div>
 				<input type="text" class="fadeIn second" name="username" placeholder="login"> 
 				<input type="text" class="fadeIn third" name="password" placeholder="senha"> 
 				<input type="submit" class="fadeIn fourth" value="ENTRAR">

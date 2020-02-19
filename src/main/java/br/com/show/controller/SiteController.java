@@ -1,6 +1,7 @@
 package br.com.show.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,6 @@ import br.com.show.repository.repEventos;
 import br.com.show.repository.repRole;
 import br.com.show.repository.repUsuario;
 import br.com.show.repository.filter.EventoFiltro;
-import br.com.show.security.UserValidator;
 
 
 @Controller
@@ -53,8 +53,10 @@ public class SiteController {
 		return mv;
 	}
 	@RequestMapping("/login")
-	public String login() {
-		return "login";
+	public ModelAndView login() {
+		ModelAndView mv=new ModelAndView("login");
+		mv.addObject(new Usuario());
+		return mv;
 	}
 	@RequestMapping("/lista")
 	public ModelAndView listaShow(@ModelAttribute("filtro") EventoFiltro filtro) {
@@ -82,20 +84,26 @@ public class SiteController {
 		return mv;
 	}
 	@RequestMapping(value="/registrar", method=RequestMethod.POST)
-	public ModelAndView salvar(@Validated Usuario usuario, Errors errors) {
-		ModelAndView mv=new ModelAndView("redirect:/registrar");
-	    UserValidator validator = new UserValidator();
-	    validator.validate(usuario,errors);
+	public String salvar_conta(@Validated Usuario usuario, Errors errors, RedirectAttributes attributes) {
 		if(errors.hasErrors()) {
-			System.out.println("erro1");
+			return "login_registrar";
+		}
+		else if(!usuario.getSenha().equals(usuario.getConfirmarsenha())){
+			attributes.addFlashAttribute("erromensagem", "Senha de confirmação incorreta!");
+			return "redirect:/registrar";
+		}
+		else if(repUsuario.existsById(usuario.getLogin())) {
+			attributes.addFlashAttribute("erromensagem", "Login já existe");
+			return "redirect:/registrar";
 		}
 		else {
-			System.out.println(usuario.getConfirmarsenha()+" "+usuario.getSenha());
+			Role client=repRole.findByNomeRole("ROLE_CLIENT");
 			usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
-			mv.addObject("mensagem", "Conta registrada!");
-			//repUsuario.save(usuario);
+			usuario.setRoles(Arrays.asList(client));
+			attributes.addFlashAttribute("mensagem", "Conta registrada!");
+			repUsuario.save(usuario);
+			return "redirect:/login";
 		}
-		return mv;
 	}
 //-------------------------------------------------------------------------------------	
 	//SHOW

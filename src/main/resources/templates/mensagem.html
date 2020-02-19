@@ -3,13 +3,17 @@
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
+	<div class="alert alert-danger fade show" role="alert" th:if="${param.error}">
+		<span> Login ou Senha está errado!</span>
+	</div>
+	<div class="alert alert-success fade show" role="alert" th:if="${param.logout}">
+		<span>Até logo!</span>
+	</div>
 	<div class="alert alert-success fade show" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
-		<button type="button" class="close" data-dismiss="alert"></button>
 		<span th:text="${mensagem}"></span>
 	</div>
 	<div class="alert alert-warning fade show" role="alert" th:if="${!#strings.isEmpty(erromensagem)}">
-		<button type="button" class="close" data-dismiss="alert"></button>
-		<span th:text="${mensagem}"></span>
+		<span th:text="${erromensagem}"></span>
 	</div>
 	<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
 		<div th:each="detailedError : ${#fields.detailedErrors()}">
