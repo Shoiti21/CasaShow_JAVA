@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -31,6 +34,7 @@ import br.com.show.repository.repCompras;
 import br.com.show.repository.repEventos;
 import br.com.show.repository.repRole;
 import br.com.show.repository.repUsuario;
+import br.com.show.repository.repRegistro;
 import br.com.show.repository.filter.EventoFiltro;
 
 
@@ -46,6 +50,8 @@ public class SiteController {
 	private repUsuario repUsuario;
 	@Autowired
 	private repRole repRole;
+	@Autowired
+	private repRegistro repRegistro;
 	
 	@RequestMapping
 	public ModelAndView home() {
@@ -56,6 +62,23 @@ public class SiteController {
 	public ModelAndView login() {
 		ModelAndView mv=new ModelAndView("login");
 		mv.addObject(new Usuario());
+		return mv;
+	}
+	@RequestMapping("/sair")
+	public ModelAndView logout() {
+		ModelAndView mv=new ModelAndView("redirect:/logout");
+		List<Produto> cart=new ArrayList<Produto>();
+		cart.clear();
+		Carrinho.setListcarrinho(cart);
+		return mv;
+	}
+	@RequestMapping("/historico")
+	public ModelAndView historico() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String user=auth.getName();
+		ModelAndView mv=new ModelAndView("page_historico");
+		List<Registro> list_historico=repRegistro.findByUsuarioLogin(user);
+		mv.addObject("list_his", list_historico);
 		return mv;
 	}
 	@RequestMapping("/lista")
@@ -77,6 +100,9 @@ public class SiteController {
 		mv.addObject(new Carrinho());
 		return mv;
 	}
+//-------------------------------------------------------------------------------------	
+	//REGISTRAR
+	
 	@RequestMapping("/registrar")
 	public ModelAndView registrar() {
 		ModelAndView mv=new ModelAndView("login_registrar");
@@ -267,11 +293,20 @@ public class SiteController {
 		for(Produto produtos : cart) {
 			int estoque=produtos.getProduto().getQtdIngresso()-produtos.getQtd_produto();
 			if(estoque>=0) {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				String user=auth.getName();
+				Optional<Usuario> name=repUsuario.findById(user);
 				Registro regCompras=new Registro();
-				regCompras.setData(data);
-				regCompras.setEvento(produtos.getProduto());
-				regCompras.setQtd(produtos.getQtd_produto());
 				produtos.getProduto().setQtdIngresso(estoque);
+				
+				for (int i = 0; i < produtos.getQtd_produto(); i++) {
+					regCompras.setData(data);
+					regCompras.setEvento(produtos.getProduto());
+					regCompras.setUsuario(name.get());
+					regCompras.setTicket(UUID.randomUUID());
+				}
+
+				
 				repCompras.save(regCompras);
 				repEventos.save(produtos.getProduto());
 			}

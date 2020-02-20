@@ -3,10 +3,12 @@ package br.com.show.model;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,6 +29,8 @@ public class Usuario implements UserDetails{
 	@NotEmpty(message="Username é obrigatório!")
 	@NotNull(message="Username é obrigatório!")
 	private String login;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy ="usuario")
+	private List<Registro> registro;
 	@NotEmpty(message="Nome é obrigatório!")
 	@NotNull(message="Nome é obrigatório!")
 	private String nomeCompleto;

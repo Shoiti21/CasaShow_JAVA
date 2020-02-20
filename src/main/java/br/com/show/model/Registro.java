@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,13 +23,21 @@ public class Registro {
     @ManyToOne
     @JoinColumn
 	private Eventos evento;
+    @ManyToOne
+    @JoinColumn
+	private Usuario usuario;
 	@NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date data;
-	@NotNull
-	private int qtd;
+	private UUID ticket;
 
+	public UUID getTicket() {
+		return ticket;
+	}
+	public void setTicket(UUID ticket) {
+		this.ticket = ticket;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -41,17 +50,17 @@ public class Registro {
 	public void setEvento(Eventos evento) {
 		this.evento = evento;
 	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	public Date getData() {
 		return data;
 	}
 	public void setData(Date data) {
 		this.data = data;
-	}
-	public int getQtd() {
-		return qtd;
-	}
-	public void setQtd(int qtd) {
-		this.qtd = qtd;
 	}
 	@Override
 	public int hashCode() {

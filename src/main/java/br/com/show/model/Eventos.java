@@ -30,14 +30,15 @@ public class Eventos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy ="evento")
-	private List<Registro> registro;
+
 	@NotEmpty(message = "O campo Nome é obrigatorio!")
 	@NotNull(message="O campo Nome é obrigatorio!")
 	private String nome;
     @ManyToOne
     @JoinColumn
 	private Casa casashow;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy ="evento")
+	private List<Registro> registro;
 	@NotNull(message="O campo Data é obrigatorio!")
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
