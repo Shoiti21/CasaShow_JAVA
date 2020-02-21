@@ -32,13 +32,16 @@
 						</li>
 					</ul>
 				</div>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
+				<div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 50px;">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item" sec:authorize="!isAuthenticated()">
 							<button type="button" onclick="window.location.href='/login'" class="btn btn-light font-weight-bold" style="margin-left: 50px;">Login</button>
 						</li>
 						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<button type="button" onclick="window.location.href='/sair'" class="btn btn-danger font-weight-bold" style="margin-left: 50px;">LOGOUT</button>
+							<p class="text-light" style="font-size:14px; margin:10px;">Bem-vindo, <span class="font-weight-bolder text-light" sec:authentication="name"></span></p>
+						</li>
+						<li class="nav-item" sec:authorize="isAuthenticated()">
+							<button type="button" onclick="window.location.href='/sair'" class="btn btn-danger font-weight-bold" >LOGOUT</button>
 						</li>
 					</ul>
 				</div>
@@ -51,7 +54,7 @@
 	<!-- Footer -->
 	<footer class="py-3 bg-dark fixed-bottom">
 		<div class="container">
-			<p class="m-0 text-center text-white">Desenvolvido por Leandro Shoiti 2020</p>
+			<p class="m-0 text-center text-white">Desenvolvido por Leandro Shoiti ©2020</p>
 		</div>
 		<!-- /.container -->
 	</footer>

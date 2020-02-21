@@ -7,10 +7,10 @@
 </head>
 <section layout:fragment="conteudo">
 	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${eventos}">
-		<div class="container-fluid" style="margin-top: 40px;">
-			<h1> EVENTO </h1>
+		<div class="container-fluid" style="margin: 40px;">
+			<h1 class="text-light font-weight-bolder"> EVENTO </h1>
 			<div layout:insert="mensagem"></div>
-			<div class="card">
+			<div class="card" style="margin-right:80px;">
 				<div class="card-header">
 					<h4> Lista de Eventos <a style="float: right;" class="btn btn-primary btn-sm" href="/registrar/evento" role="button">Novo Evento</a></h4>
 				</div>

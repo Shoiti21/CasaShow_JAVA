@@ -1,36 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" 
 	layout:decorator="Layout">
 	<head>
 		<title>CASA DE SHOW</title>
 		<link rel="stylesheet" type="text/css" href="/css/home.css"></link>
 	</head>
 	<section layout:fragment="conteudo">
-		<div id="background-carousel">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-				<div class="carousel-inner">
-					<div class="item active"
-						style="background-image: url(http://placehold.it/1600x800/)"></div>
-					<div class="item"
-						style="background-image: url(http://placehold.it/1600x800/)"></div>
-					<div class="item"
-						style="background-image: url(http://placehold.it/1600x800/)"></div>
-				</div>
-			</div>
-		</div>
-	
-	
-		<div id="content-wrapper">
-			<!-- PAGE CONTENT -->
-			<div class="container">
-				<div class="page-header">
-					<h3>Bem-Vindo!</h3>
-				</div>
-				<!-- End Well -->
-			</div>
-			<!-- End Container -->
-			<!-- PAGE CONTENT -->
+		<div class="textcenter">
+			 <p class="font-weight-bolder text-light" style="font-size:5em;">BEM-VINDO,</p>
+			 <p class="font-weight-bolder text-light" style="font-size:2em;">A LOJA COM OS MELHORES PREÇOS, NÃO PERCA TEMPO.</p>
+			 <button type="button" onclick="window.location.href='/login'" class="btn btn-secondary" sec:authorize="!isAuthenticated()">COMECE SUA COMPRA!</button>
 		</div>
 	</section>
 </html>

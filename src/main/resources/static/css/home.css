@@ -1,7 +1,18 @@
-.tales {
-  width: 100%;
+body, html {
+  height: 100%;
+  background-image: url("/img/home/2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 }
-.carousel-inner{
-  width:100%;
-  max-height: 1000px;
+.textcenter{
+	
+	text-align:center;
+	left:50%;
+	top:45%;
+	position: absolute;
+	margin:0;
+	transform:translateX(-50%)translateY(-50%);
+	filter: drop-shadow(8px 8px 10px black);
 }

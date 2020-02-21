@@ -28,8 +28,8 @@
 				<div layout:insert="mensagem"></div>
 				<input type="text" class="fadeIn second" th:field="*{nomeCompleto}" placeholder="nome completo" th:classappend="${#fields.hasErrors('nomeCompleto')} ? is-invalid">
 				<input type="text" class="fadeIn second" th:field="*{login}" placeholder="username" th:classappend="${#fields.hasErrors('login')} ? is-invalid">  
-				<input type="text" class="fadeIn third" th:field="*{senha}" placeholder="senha" th:classappend="${#fields.hasErrors('senha')} ? is-invalid"> 
-				<input type="text" class="fadeIn third" th:field="*{confirmarsenha}" placeholder="confirmar senha" th:classappend="${#fields.hasErrors('confirmarsenha')} ? is-invalid"> 
+				<input type="password" class="fadeIn third" th:field="*{senha}" placeholder="senha" th:classappend="${#fields.hasErrors('senha')} ? is-invalid"> 
+				<input type="password" class="fadeIn third" th:field="*{confirmarsenha}" placeholder="confirmar senha" th:classappend="${#fields.hasErrors('confirmarsenha')} ? is-invalid"> 
 				<input type="submit" class="fadeIn fourth" value="CADASTRAR">
 			</form>
 
