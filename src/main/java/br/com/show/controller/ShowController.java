@@ -48,7 +48,7 @@ public class ShowController {
 		}
 		repShow.save(show);
 		attributes.addFlashAttribute("mensagem", "Casa de Show registrado com sucesso!");
-		return "redirect:/registrar/show";
+		return "redirect:/gerShow";
 	}
 	@RequestMapping("/editarShow/{show_id}") //EDITAR
 	public ModelAndView editar_show(@PathVariable Long show_id) {

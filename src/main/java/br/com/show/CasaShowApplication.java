@@ -15,7 +15,7 @@ public class CasaShowApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CasaShowApplication.class, args);
-		System.out.println(new BCryptPasswordEncoder().encode("321"));
+
 	}
 	@Bean
 	public LocaleResolver localeResolver() {

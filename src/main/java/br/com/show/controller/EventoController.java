@@ -52,10 +52,21 @@ public class EventoController {
 		if(errors.hasErrors()) {
 			return "page_registrarEvento";
 		}
-		evento.setQtdIngresso(evento.getQtdIngressoMax());
+		if(!repEventos.existsById(evento.getId())) {
+			evento.setQtdIngresso(evento.getQtdIngressoMax());
+		}
+		else {
+			Optional<Eventos> evento2=repEventos.findById(evento.getId());
+			Eventos evento3=evento2.get();
+			if(evento3.getQtdIngresso()>evento.getQtdIngressoMax()) {
+				attributes.addFlashAttribute("erromensagem", "Você não pode editar com esse número de ingresso!");
+				return "redirect:/gerEvento";
+			}
+			evento.setQtdIngresso(evento3.getQtdIngresso());
+		}
 		repEventos.save(evento);
 		attributes.addFlashAttribute("mensagem", "Evento registrado com sucesso!");
-		return "redirect:/registrar/evento";
+		return "redirect:/gerEvento";
 	}
 	@RequestMapping("/editarEvento/{evento_id}") //EDITAR
 	public ModelAndView editar_Evento(@PathVariable Long evento_id) {
@@ -65,7 +76,6 @@ public class EventoController {
 		mv.addObject("genero", Genero.values());
 		mv.addObject("list_casa", todasCasas);
 		mv.addObject(eventos.get());
-		
 		mv.addObject("listcarrinho", Carrinho.getListcarrinho());
 		mv.addObject(new Carrinho());
 		return mv;

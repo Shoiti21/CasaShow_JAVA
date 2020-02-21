@@ -9,7 +9,7 @@
 	<form class="form-horizontal" method="POST" action="/registrar/salvarshow" th:object="${eventos}">
 		<div class="container-fluid" style="margin: 40px;">
 			<h1 class="text-light font-weight-bolder"> EVENTO </h1>
-			<div layout:insert="mensagem"></div>
+			<div layout:insert="mensagem" style="margin-right:80px;"></div>
 			<div class="card" style="margin-right:80px;">
 				<div class="card-header">
 					<h4> Lista de Eventos <a style="float: right;" class="btn btn-primary btn-sm" href="/registrar/evento" role="button">Novo Evento</a></h4>

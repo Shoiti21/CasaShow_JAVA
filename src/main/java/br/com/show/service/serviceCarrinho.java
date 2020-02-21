@@ -42,25 +42,26 @@ public class serviceCarrinho {
 	}
 	public void adicionar(Long id) {
 		Optional<Eventos> evento=repEventos.findById(id);
-		List<Produto> cart=new ArrayList<Produto>();
-		cart=Carrinho.getListcarrinho();
+		List<Produto> carrinho=new ArrayList<Produto>();
+		carrinho=Carrinho.getListcarrinho();
 		if (Carrinho.getListcarrinho().isEmpty()) {
-			cart.add(new Produto (evento.get(),1));	
+			carrinho.add(new Produto (evento.get(),1));	
+			System.out.println("erro1");
 		}
 		else {
-			for (Produto produto : cart) {
+			for (Produto produto : carrinho) {
 				if(produto.getProduto().getId().equals(id)) {
 					int qtd=produto.getQtd_produto()+1;
 					produto.setQtd_produto(qtd);
-					Carrinho.setListcarrinho(cart);
-				}
-				else {
-					cart.add(new Produto (evento.get(),1));	
+					Carrinho.setListcarrinho(carrinho);
+					System.out.println("erro2");
+					return;
 				}
 			}
-			
+			carrinho.add(new Produto (evento.get(),1));	
+			System.out.println("erro3");
 		}
-		Carrinho.setListcarrinho(cart);
+		Carrinho.setListcarrinho(carrinho);
 	}
 	public void remover(Long id) {
 		List<Produto> carrinho=new ArrayList<Produto>();
